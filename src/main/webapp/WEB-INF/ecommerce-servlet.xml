@@ -1,0 +1,83 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation=" http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+	http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+	
+
+	<context:component-scan base-package="edu.java.spring.controller"/>
+	<mvc:annotation-driven/>
+	
+	<bean id="keyboardMapper" class="edu.java.spring.model.KeyboardMapper"/>
+	
+	
+	<bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="targetObject">
+			<ref bean="keyboardDAO"/>
+		</property>
+		<property name="targetMethod">
+			<value>createTableIfNotExist</value>
+		</property>
+		<property name="arguments">
+			<list>
+				<value>keyboard</value>
+				<value>
+					IF OBJECT_ID('keyboard') IS NULL
+					begin
+						CREATE TABLE keyboard(
+						productId int primary key,
+						name varchar(50) not null,
+						manufacturerId int not null,
+						switchId int not null,
+						profileId int not null,
+						price int 
+						)
+					end
+				</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id = "keyboardDAO" class="edu.java.spring.dao.KeyboardDAO">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="insertSQL" value="INSERT into keyboard(productId,name,manufacturerid,
+										switchId,profileId,price) values(?,?,?,?,?,?)"/>
+	</bean>
+	
+	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<prop key="java.lang.Exception">KeyboardError</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="multipartResolver"
+		 class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="100000"/>		
+	</bean>
+		
+	<bean id="dataSource" 
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+		<property name="url" value="jdbc:sqlserver://localhost:49854;databaseName=ecommerce;create=true"/>
+		<property name="username" value="sa"/>
+		<property name="password" value="congminh"/>
+	
+	</bean>
+	
+	<bean class="org.springframework.context.support.ResourceBundleMessageSource"
+		id="messageSource">
+		<property name="basename" value="message"/>
+	</bean>
+	
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="suffix" value=".jsp"/>
+	</bean>	
+	
+</beans>
