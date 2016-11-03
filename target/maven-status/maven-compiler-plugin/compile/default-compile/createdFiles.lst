@@ -1,6 +1,8 @@
 edu\java\spring\dao\KeyboardDAO.class
 edu\java\spring\controller\EcommerceController.class
+edu\java\spring\dao\impl\KeyboardDAOImpl.class
+edu\java\spring\dao\impl\KeyboardHibernateDAOImpl.class
 edu\java\spring\model\Keyboard.class
-edu\java\spring\dao\KeyboardDAO$1.class
 edu\java\spring\model\KeyboardMapper.class
+edu\java\spring\dao\impl\KeyboardDAOImpl$1.class
 edu\java\spring\controller\CustomContextLoaderListener.class

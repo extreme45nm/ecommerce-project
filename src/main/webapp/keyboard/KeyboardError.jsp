@@ -2,7 +2,7 @@
 <html>
 
 	<head>
-		<title>Student Error</title>	
+		<title>Keyboard Error</title>	
 	</head>
 	<body>
 		<%
