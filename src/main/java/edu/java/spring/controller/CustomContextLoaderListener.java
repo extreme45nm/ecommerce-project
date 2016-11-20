@@ -24,7 +24,8 @@ public class CustomContextLoaderListener extends ContextLoaderListener{
 		
 		try{
 			System.out.println("===> hibernate shutdown database");
-			DriverManager.getConnection("jdbc:sqlserver:;shutdown=true");			
+			DriverManager.getConnection("jdbc:sqlserver://localhost:49854;databaseName=ecommerce;username=sa;password=congminh"
+					+ ";shutdown=true");			
 		}catch(SQLException exc){
 			exc.printStackTrace();
 		}		
@@ -61,6 +62,18 @@ public class CustomContextLoaderListener extends ContextLoaderListener{
 						"profileId int not null,"+
 						"price int"+ 
 						")");
+			createTableIfNotExist(connection,"manufacturer","CREATE TABLE manufacturer("+
+					"manufacturerId int IDENTITY(1,1) primary key,"+
+					"name varchar(50) not null,"+
+					"location varchar(100) not null"+ 
+					")");
+			createTableIfNotExist(connection, "switch", "CREATE TABLE switch("
+					+ "switchId int IDENTITY(1,1) primary key,"
+					+ "manufacturerId int not null,"
+					+ "switchName varchar(50) not null,"
+					+ "switchForce int not null"
+					+ ")");
+			
 		}finally{
 			connection.close();			
 		}

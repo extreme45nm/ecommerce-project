@@ -28,7 +28,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import edu.java.spring.dao.KeyboardDAO;
-import edu.java.spring.dao.impl.KeyboardHibernateDAOImpl;
+import edu.java.spring.dao.ManufacturerDAO;
+import edu.java.spring.dao.SwitchDAO;
 import edu.java.spring.model.Keyboard;
 
 @Controller
@@ -36,6 +37,12 @@ public class EcommerceController {
 	
 	@Autowired
 	private KeyboardDAO kbDao;
+	
+	@Autowired
+	private ManufacturerDAO manuDAO;
+	
+	@Autowired
+	private SwitchDAO swDAO;
 	
 	@RequestMapping(value="/keyboard/images/{productId}",method=RequestMethod.GET)
 	public ResponseEntity<byte[]> getImage(@PathVariable int productId,HttpServletRequest request) throws IOException{
@@ -129,8 +136,12 @@ public class EcommerceController {
 		mav.setViewName("KeyboardList");
 		if(query == "" || query == null){
 			mav.addObject("keyboard", kbDao.listKeyboard());
+			mav.addObject("manufacturer",manuDAO.listManufacturer());
+			mav.addObject("switchh", swDAO.listSwitch());
 		}else{
 			mav.addObject("keyboard", kbDao.searchKeyboardByName(query));
+			mav.addObject("manufacturer",manuDAO.listManufacturer());
+			mav.addObject("switchh", swDAO.listSwitch());
 		}
 		
 		return mav;

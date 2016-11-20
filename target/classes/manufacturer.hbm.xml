@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="edu.java.spring.model.Manufacturer" table="manufacturer">
+		<meta attribute="class-description">
+			This class contains manufacturer details
+		</meta>
+		<id name="manufacturerId" type="int" column="manufacturerId">
+			<generator class="native"/>
+		</id>
+		<property name="name" column="name" type="string"/>
+		<property name="location" column="location" type="string"/>
+		
+	</class>
+</hibernate-mapping>

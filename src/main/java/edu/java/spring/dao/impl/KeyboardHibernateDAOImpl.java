@@ -134,15 +134,6 @@ public class KeyboardHibernateDAOImpl implements KeyboardDAO{
 		}
 	}
 	
-	public void shutdown(){
-		try{
-			System.out.println("===> Hibernate shutdown!!");
-			DriverManager.getConnection("jdbc:sqlserver:;shutdown=true");
-		}catch(SQLException exc){
-			log.error(exc);
-		}
-	}
-
 
 	public String getInsertSQL() {
 		return insertSQL;

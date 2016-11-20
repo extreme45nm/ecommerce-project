@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="edu.java.spring.model.Switch" table="switch">
+		<meta attribute="class-description">
+			This class contains Switch details
+		</meta>
+		<id name="switchId" type="int" column="switchId">
+			<generator class="native"/>
+		</id>
+		<property name="manufacturerId" column="manufacturerId" type="int"/>
+		<property name="switchName" column="switchName" type="string"/>
+		<property name="switchForce" column="switchForce" type="int"/>
+	</class>
+</hibernate-mapping>

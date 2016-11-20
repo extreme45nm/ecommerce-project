@@ -14,17 +14,27 @@
 	<mvc:annotation-driven/>
 	
 	<bean id="keyboardMapper" class="edu.java.spring.model.KeyboardMapper"/>
-	
+	<bean id="manufacturerMapper" class="edu.java.spring.model.ManufacturerMapper"/>
+	<bean id="switchMapper" class="edu.java.spring.model.SwitchMapper"/>
 	
 	<bean id="sessionFactory"
-		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">		
 		<property name="dataSource" ref="dataSource"/>
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.SQLServer2008Dialect</prop>
-				<prop key="hiberante.show_sql">true</prop>
+				<prop key="hibernate.show_sql">true</prop>
 			</props>
 		</property>	
+		
+		
+		<property name="mappingLocations">
+			<list>
+				<value>classpath:manufacturer.hbm.xml</value>
+				<value>classpath:switch.hbm.xml</value>
+			</list>
+			
+		</property>		
 		<property name="packagesToScan" value="edu.java.spring.model"/>
 	</bean>
 	
@@ -55,12 +65,19 @@
 		</property>
 	</bean-->
 	
+	<bean id="swDAO" class="edu.java.spring.dao.impl.SwitchHibernateDAOImpl">
+	</bean>
+	
+	<bean id="manuDAO" class="edu.java.spring.dao.impl.ManuHibernateDAOImpl">
+	</bean>
+	
 	<bean id = "keyboardDAO" class="edu.java.spring.dao.impl.KeyboardHibernateDAOImpl">
 		<!-- property name="dataSource" ref="dataSource"/-->
 		<property name="insertSQL" value="INSERT into keyboard(productId,name,manufacturerid,
 										switchId,profileId,price) values(?,?,?,?,?,?)"/>
 	</bean>
 	
+		
 	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 		<property name="exceptionMappings">
 			<props>
@@ -71,7 +88,7 @@
 	
 	<bean id="multipartResolver"
 		 class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<property name="maxUploadSize" value="100000"/>		
+		<property name="maxUploadSize" value="1000000"/>		
 	</bean>
 		
 	<bean id="dataSource" 
